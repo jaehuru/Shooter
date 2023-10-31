@@ -72,3 +72,7 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Files for Rider IDE
+*.idea
+*.uproject.DotSettings.user
