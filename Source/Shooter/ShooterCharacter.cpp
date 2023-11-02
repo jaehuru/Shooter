@@ -20,6 +20,23 @@ void AShooterCharacter::BeginPlay()
 
 	int myInt{ 42 };
 	UE_LOG(LogTemp, Warning, TEXT("int myInt: %d"), myInt);
+
+	float myFloat{ 3.14159f };
+	UE_LOG(LogTemp, Warning, TEXT("float myFloat: %f"), myFloat);
+
+	double myDouble{ 0.00756 };
+	UE_LOG(LogTemp, Warning, TEXT("double myDouble: %lf"), myDouble);
+
+	char myChar{ 'J' };
+	UE_LOG(LogTemp, Warning, TEXT("char myChar: %c"), myChar);
+
+	wchar_t wideChar{ L'J' };
+	UE_LOG(LogTemp, Warning, TEXT("wchar_t wideChar: %lc"), wideChar);
+
+	bool byBool{ true };
+	UE_LOG(LogTemp, Warning, TEXT("bool byBool: %d"), byBool);
+	
+	UE_LOG(LogTemp, Warning, TEXT("int: %d, float: %f, bool: %d"),myInt, myFloat, false);
 }
 
 // Called every frame
