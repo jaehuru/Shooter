@@ -36,6 +36,9 @@ protected:
 	 * @param Rate  This is a normalized rate, i.e. 1.0 means 100% of desired rate
 	 */
 	void LookUpAtRate(float Rate);
+
+	// Called when the Fire Button is pressed
+	void FireWeapon();
 	
 public:	
 	// Called every frame
@@ -60,7 +63,6 @@ private:
 	// Bse look up/dawn rate, in deg/sec. Other scaling may affect final turn rate
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,  meta = (AllowPrivateAccess = "true"))
 	float BaseLookUpRate;
-	
 
 public:
 	// Returns CameraBoom subobject
