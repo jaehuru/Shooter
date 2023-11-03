@@ -4,10 +4,12 @@
 #include "ShooterCharacter.h"
 
 #include "Camera/CameraComponent.h"
+#include "Engine/SkeletalMeshSocket.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+#include "Engine/SkeletalMeshSocket.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter() :
@@ -89,6 +91,16 @@ void AShooterCharacter::FireWeapon()
 	if (FireSound)
 	{
 		UGameplayStatics::PlaySound2D(this, FireSound);
+	}
+	const USkeletalMeshSocket* BarrelSocket = GetMesh()->GetSocketByName("BarrelSocket");
+	if (BarrelSocket)
+	{
+		const FTransform SoketTransform = BarrelSocket->GetSocketTransform(GetMesh());
+
+		if (MuzzleFlash)
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), MuzzleFlash, SoketTransform);
+		}
 	}
 }
 
