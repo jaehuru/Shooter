@@ -4,6 +4,7 @@
 #include "ShooterCharacter.h"
 
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 // Sets default values
@@ -24,6 +25,16 @@ AShooterCharacter::AShooterCharacter() :
 	FollwCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach camera to end of
 	FollwCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	// Don't rotate when the controller rotates. Let the controller only affect the camera/
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationYaw = false;
+	bUseControllerRotationRoll = false;
+
+	// Configure character movement
+	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 540.f, 0.f); // ... at this rotation rate
+	GetCharacterMovement()->JumpZVelocity = 600.f;
+	GetCharacterMovement()->AirControl = 0.2f;
 
 }
 
