@@ -15,7 +15,7 @@ void UShooterAnimInstance::UpdateAnimationProperties(float DeltaTime)
 	if (ShooterCharacter)
 	{
 		// Get the speed of the character from velocity
-		FVector Velocity{ ShooterCharacter->GetVelocity() };
+		FVector Velocity{ShooterCharacter->GetVelocity()};
 		Velocity.Z = 0;
 		Speed = Velocity.Size();
 
