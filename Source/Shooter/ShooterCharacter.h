@@ -45,6 +45,8 @@ protected:
 	// Set bAiming to true or false with button press
 	void AimingButtonPressed();
 	void AimingButtonReleased();
+
+	void CameraInterpZoom(float DeltaTime);
 	
 public:	
 	// Called every frame
@@ -99,6 +101,13 @@ private:
 
 	// Field of view value for when zoom
 	float CameraZoomedFOV;
+
+	// Current field pf view this frame
+	float CameraCurrentFOV;
+
+	// Interp speed for zooming when aiming
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"));
+	float ZoomInterpSpeed;
 public:
 	// Returns CameraBoom subobject
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
