@@ -46,9 +46,9 @@ ZoomInterpSpeed(30.f)
 	CameraBoom->SocketOffset = FVector(0.f, 50.f, 70.f);
 
 	//Create a follow camera
-	FollwCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	FollwCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach camera to end of
-	FollwCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach camera to end of
+	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	// Don't rotate when the controller rotates. Let the controller only affect the camera/
 	bUseControllerRotationPitch = false;
@@ -68,7 +68,7 @@ void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (FollwCamera)
+	if (FollowCamera)
 	{
 		CameraDefaultFOV = GetFollowCamera()->FieldOfView;
 		CameraCurrentFOV = CameraDefaultFOV;
@@ -300,6 +300,20 @@ void AShooterCharacter::SetLookRates()
 		BaseTurnRate = HipTurnRate;
 		BaseLookUpRate = HipLookUpRate;
 	}
+	
+}
+
+void AShooterCharacter::CalculateCrosshairSpread(float DeltaTime)
+{
+	FVector2D WalkSpeedRange{ 0.f, 600.f };
+	FVector2D VelocityMultiplierRange{ 0.f, 1.f };
+	FVector Velocity{ GetVelocity() };
+	Velocity.Z = 0.f;
+
+	CrosshairVelocityFactor = FMath::GetMappedRangeValueClamped(WalkSpeedRange, VelocityMultiplierRange,Velocity.Size());
+	
+	CrosshairSpreadMultiplier = 0.5f + CrosshairVelocityFactor;
+	
 }
 
 // Called every frame
