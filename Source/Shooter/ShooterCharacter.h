@@ -110,15 +110,15 @@ private:
 		"0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
 	float MouseHipTurnRate;
 
-	// Scale factor for mouse look sensitivity. Look up rate when not aiming.
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin =
-		"0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
-	float MouseAimingTurnRate;
-
 	// Scale factor for mouse look sensitivity. Turn rate when aiming.
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin =
 		"0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
 	float MouseHipLookUpRate;
+
+	// Scale factor for mouse look sensitivity. Look up rate when not aiming.
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin =
+		"0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
+	float MouseAimingTurnRate;
 
 	// Scale factor for mouse look sensitivity. Look up rate when aiming.
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin =
