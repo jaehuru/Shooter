@@ -213,7 +213,6 @@ bool AShooterCharacter::GetBeamEndLocation(
 
 	// Get screen space location of crosshairs
 	FVector2D CrosshairLocation(ViewportSize.X / 2.f, ViewportSize.Y / 2.f);
-	CrosshairLocation.Y -= 50.f;
 	FVector CrosshairWorldPosition;
 	FVector CrosshairWorldDirection;
 
@@ -384,6 +383,7 @@ void AShooterCharacter::Tick(float DeltaTime)
 	CameraInterpZoom(DeltaTime);
 	// Change look sensitivity based on aiming
 	SetLookRates();
+	// Calculate crosshair spread multiplier
 	// Calculate crosshair spread multiplier
 	CalculateCrosshairSpread(DeltaTime);
 	
