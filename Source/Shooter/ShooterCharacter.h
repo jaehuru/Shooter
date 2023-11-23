@@ -56,6 +56,7 @@ protected:
 
 	// Set bAiming to true or false with button press
 	void AimingButtonPressed();
+	
 	void AimingButtonReleased();
 
 	void CameraInterpZoom(float DeltaTime);
