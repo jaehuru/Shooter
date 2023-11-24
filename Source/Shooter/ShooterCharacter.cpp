@@ -382,7 +382,7 @@ void AShooterCharacter::StartFireTimer()
 	if (bShouldFire)
 	{
 		FireWeapon();
-		bShouldFire = false;~
+		bShouldFire = false;
 		GetWorldTimerManager().SetTimer(AutoFireTimer, this, &AShooterCharacter::AutoFireReset, AutomaticFireRate);
 	}
 }
