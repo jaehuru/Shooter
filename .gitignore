@@ -76,3 +76,6 @@ DerivedDataCache/*
 # Files for Rider IDE
 *.idea
 *.uproject.DotSettings.user
+
+# Content files
+Content/
