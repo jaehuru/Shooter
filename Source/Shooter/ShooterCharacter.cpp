@@ -14,6 +14,8 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Item.h"
 #include "Weapon.h"
+#include "Components/BoxComponent.h"
+#include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
 
 // Sets default values
@@ -92,8 +94,8 @@ void AShooterCharacter::BeginPlay()
 		CameraCurrentFOV = CameraDefaultFOV;
 	}
 
-	// Spawn the default Weapon and Attach it to the mesh
-	SpawnDefaultWeapon();
+	// Spawn the default Weapon and equip it
+	EquipWeapon(SpawnDefaultWeapon());
 	
 }
 
@@ -468,23 +470,37 @@ void AShooterCharacter::TraceForItems()
 	}
 }
 
-void AShooterCharacter::SpawnDefaultWeapon()
+AWeapon* AShooterCharacter::SpawnDefaultWeapon()
 {
 	// Check the TsubclassOF variable
 	if (DefaultWeaponClass)
 	{
 		// Spawn the Weapon
-		AWeapon* DefaultWeapon = GetWorld()->SpawnActor<AWeapon>(DefaultWeaponClass);
+		return GetWorld()->SpawnActor<AWeapon>(DefaultWeaponClass);
+	}
+
+	return nullptr;
+}
+
+void AShooterCharacter::EquipWeapon(AWeapon* WeaponToEquip)
+{
+	if (WeaponToEquip)
+	{
+		// Set AreaSphere to ignore all collision Channels
+		WeaponToEquip->GetAreaSphere()->SetCollisionResponseToAllChannels(::ECR_Ignore);
+		// Set CollisionBox to ignore all collision Channels
+		WeaponToEquip->GetCollisionBox()->SetCollisionResponseToAllChannels(::ECR_Ignore);
+		
 		// Get the Hand Socket
 		const USkeletalMeshSocket* HandSocket = GetMesh()->GetSocketByName(FName("RightHandSocket"));
 		if (HandSocket)
 		{
 			// Attach the Weapon to the hand socket RightHandSocket
-			HandSocket->AttachActor(DefaultWeapon, GetMesh());
+			HandSocket->AttachActor(WeaponToEquip, GetMesh());
 		}
-
 		// Set EquippedWeapon to the newly Spawned Weapon
-		EquippedWeapon = DefaultWeapon;
+		EquippedWeapon = WeaponToEquip;
+		EquippedWeapon->SetItemState(EItemState::EIS_Equipped);
 	}
 }
 
