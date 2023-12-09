@@ -4,6 +4,7 @@
 #include "Item.h"
 
 #include "ShooterCharacter.h"
+#include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
@@ -18,7 +19,10 @@ ItemState(EItemState::EIS_Pickup),
 ItemInterpStartLocation(FVector(0.f)),
 CameraTargetLocation(FVector(0.f)),
 bInterping(false),
-ZCurveTime(0.7f)
+ZCurveTime(0.7f),
+ItemInterpX(0.f),
+ItemInterpY(0.f),
+InterpInitialYawOffset(0.f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -223,11 +227,26 @@ void AItem::ItemInterp(float DeltaTime)
 		const FVector ItemToCamera{FVector(0.f, 0.f, (CameraInterpLocation - ItemLocation).Z)};
 		// Scale factor to multiply with CurveValue
 		const float DeltaZ = ItemToCamera.Size();
+		
+		const FVector CurrentLocation{GetActorLocation()};
+		//Interpolated X value
+		const float InterpXValue = FMath::FInterpTo(CurrentLocation.X, CameraInterpLocation.X, DeltaTime, 30.f);
+		//Interpolated Y value
+		const float InterpYValue = FMath::FInterpTo(CurrentLocation.Y, CameraInterpLocation.Y, DeltaTime, 30.f);
 
+		// Set X and Y of ItemLocation to Interped values
+		ItemLocation.X = InterpXValue;
+		ItemLocation.Y = InterpYValue;
+		
 		// Adding curve value to the Z component of the Initial Location (scaled by DeltaZ)
 		ItemLocation.Z += CurveValue * DeltaZ;
 		SetActorLocation(ItemLocation, true, nullptr, ETeleportType::TeleportPhysics);
-		
+
+		// Camera Rotation this frame
+		const FRotator CameraRotation{Character->GetFollowCamera()->GetComponentRotation()};
+		// Camera rotation plus initial Yaw Offset
+		FRotator ItemRotaion{0.f, CameraRotation.Yaw + InterpInitialYawOffset, 0.f};
+		SetActorRotation(ItemRotaion, ETeleportType::TeleportPhysics);
 	}
 }
 
@@ -261,5 +280,12 @@ void AItem::StartItemCurve(AShooterCharacter* Char)
 		this,
 		&AItem::FinishInterping,
 		ZCurveTime);
+
+	// Get initial Yaw of the Camera
+	const double CameraRotationYaw{Character->GetFollowCamera()->GetComponentRotation().Yaw};
+	// Get initial Yaw of the Item
+	const double ItemRotationYaw{GetActorRotation().Yaw};
+	// Initail Yaw offset between Camera and Item
+	InterpInitialYawOffset = ItemRotationYaw - CameraRotationYaw;
 }
 
