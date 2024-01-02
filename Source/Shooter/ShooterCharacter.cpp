@@ -592,10 +592,11 @@ void AShooterCharacter::ReloadButtonPressed()
 void AShooterCharacter::ReloadWeapon()
 {
 	if (CombatState != ECombatState::ECS_Uncoccupied) return;
-
+	if (EquippedWeapon == nullptr) return;
+	
 	if (CarryingAmmo())
 	{
-		
+		CombatState = ECombatState::ECS_Reloading;
 		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 		if (AnimInstance && ReloadMontage)
 		{
