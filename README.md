@@ -1,3 +1,3 @@
 # Shooter
 
-TPS Shooter game lecture project
+TPS Shooter game project
