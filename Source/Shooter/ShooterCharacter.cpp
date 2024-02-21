@@ -190,6 +190,8 @@ void AShooterCharacter::FireWeapon()
 		EquippedWeapon->DecrementAmmo(); // Subtract 1 from the Weapon's Ammo
 
 		StartFireTimer();
+		// Start bullet fire timer for crosshairs
+		StartCrosshairBulletFire();
 	}
 }
 
