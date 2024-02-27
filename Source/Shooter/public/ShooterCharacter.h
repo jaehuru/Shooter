@@ -256,6 +256,12 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Crosshair, meta = (AllowPrivateAccess = "true"))
 	float CrosshairShootingFactor;
 
+	float ShootTimeDuration;
+	
+	bool bFiringBullet;
+	
+	FTimerHandle CrosshairShootTimer;
+	
 	// Left mouse button or right console trigger pressed
 	bool bFireButtonPressed;
 
@@ -267,7 +273,7 @@ private:
 
 	// Sets a timer between gunshots
 	FTimerHandle AutoFireTimer;
-
+	
 	// True if we should trace every frame for items
 	bool bShouldTraceForItems;
 
@@ -329,11 +335,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	USceneComponent* HandSceneComponent;
 	
-	float ShootTimeDuration;
-	
-	bool bFiringBullet;
-	
-	FTimerHandle CrosshairShootTimer;
 
 public:
 	// Returns CameraBoom subobject

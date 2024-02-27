@@ -2,6 +2,7 @@
 
 
 #include "ShooterAnimInstance.h"
+
 #include "ShooterCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -18,7 +19,10 @@ TIPCharacterYawLastFrame(0.f),
 RootYawOffset(0.f),
 Pitch(0.f),
 bReloading(false),
-OffsetState(EOffsetState::EOS_Hip)
+OffsetState(EOffsetState::EOS_Hip),
+CharacterRotation(FRotator(0.f)),
+CharacterRotationLastFrame(FRotator(0.f)),
+YawDelta(0.f)
 {
 	
 }
@@ -142,12 +146,13 @@ void UShooterAnimInstance::TurnInPlace()
 void UShooterAnimInstance::Lean(float DeltaTime)
 {
 	if (ShooterCharacter == nullptr) return;
-	CharacterYawLastFrame = CharacterYaw;
-	CharacterYaw = ShooterCharacter->GetActorRotation().Yaw;
+	CharacterRotationLastFrame = CharacterRotation;
+	CharacterRotation = ShooterCharacter->GetActorRotation();
 
-	const float Target{ (CharacterYaw - CharacterYawLastFrame) / DeltaTime };
-	const float Interp{ FMath::FInterpTo(YawDelta, Target, DeltaTime, 6.f) };
+	const FRotator Delta{ UKismetMathLibrary::NormalizedDeltaRotator(CharacterRotation,CharacterRotationLastFrame) };
+
+	const double Target{ Delta.Yaw / DeltaTime };
+	const double Interp{ FMath::FInterpTo(YawDelta, Target, DeltaTime, 6.f) };
 	YawDelta = FMath::Clamp(Interp, -90.f, 90.f);
-
-	if (GEngine) GEngine->AddOnScreenDebugMessage(2, -1, FColor::Cyan, FString::Printf(TEXT("YawDelta : %f"), YawDelta));
+	
 }

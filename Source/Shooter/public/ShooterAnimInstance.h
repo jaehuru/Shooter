@@ -96,12 +96,12 @@ private:
 	EOffsetState OffsetState;
 
 	// Character Yaw this frame
-	float CharacterYaw;
+	FRotator CharacterRotation;
 
 	// Character Yaw last frame
-	float CharacterYawLastFrame;
+	FRotator CharacterRotationLastFrame;
 
 	// Yaw delta used for leaning in the running blend
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Lean, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Lean", meta = (AllowPrivateAccess = "true"))
 	float YawDelta;
 };

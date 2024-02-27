@@ -45,6 +45,9 @@ CrosshairVelocityFactor(0.f),
 CrosshairInAirFactor(0.f),
 CrosshairAimFactor(0.f),
 CrosshairShootingFactor(0.f),
+// Bullet fire timer variables
+ShootTimeDuration(0.05f),
+bFiringBullet(false),
 // Automatic fire variables
 bFireButtonPressed(false),
 bShouldFire(true),
@@ -58,10 +61,7 @@ CameraInterpElevation(65.f),
 // Starting ammo amounts
 Starting9mmAmmo(85),
 StartingARAmmo(120),
-CombatState(ECombatState::ECS_Uncoccupied),
-// Bullet fire timer variables
-ShootTimeDuration(0.05f),
-bFiringBullet(false)
+CombatState(ECombatState::ECS_Uncoccupied)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -344,7 +344,11 @@ void AShooterCharacter::StartFireTimer()
 {
 	CombatState = ECombatState::ECS_FireTimerInProgress;
 	
-	GetWorldTimerManager().SetTimer(AutoFireTimer, this, &AShooterCharacter::AutoFireReset, AutomaticFireRate);
+	GetWorldTimerManager().SetTimer(
+		AutoFireTimer,
+		this,
+		&AShooterCharacter::AutoFireReset,
+		AutomaticFireRate);
 	
 }
 
@@ -371,7 +375,11 @@ void AShooterCharacter::StartCrosshairBulletFire()
 {
 	bFiringBullet = true;
 
-	GetWorldTimerManager().SetTimer(CrosshairShootTimer, this, &AShooterCharacter::FinishCrosshairBulletFire, ShootTimeDuration);
+	GetWorldTimerManager().SetTimer(
+		CrosshairShootTimer,
+		this,
+		&AShooterCharacter::FinishCrosshairBulletFire,
+		ShootTimeDuration);
 }
 
 void AShooterCharacter::FinishCrosshairBulletFire()
