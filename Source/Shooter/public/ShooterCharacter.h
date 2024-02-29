@@ -139,6 +139,8 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void ReleaseClip();
 
+	void CrouchButtonPressed();
+
 public:
 	// Called every frame 
 	virtual void Tick(float DeltaTime) override;
@@ -334,6 +336,10 @@ private:
 	// Scene component to attach to the Character's hand during reloading
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	USceneComponent* HandSceneComponent;
+
+	// True when crouching
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	bool bCrouching;
 	
 
 public:
@@ -357,5 +363,6 @@ public:
 	void GetPickupItem(AItem* Item);
 
 	FORCEINLINE ECombatState GetCombatstate() const { return CombatState; }
+	FORCEINLINE bool GetCrouching() const { return bCrouching; }
 	
 };
