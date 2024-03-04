@@ -143,6 +143,9 @@ protected:
 
 	virtual void Jump() override;
 
+	// Interps capsule half height when crouching/standing
+	void interpCapsuleHalfHeight(float DeltaTime);
+
 public:
 	// Called every frame 
 	virtual void Tick(float DeltaTime) override;
@@ -216,11 +219,11 @@ private:
 	class UAnimMontage* HipFireMontage;
 
 	// Particles spawned upon bullet impact
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	UParticleSystem* ImpactParticles;
 
 	// Smoke trail for bullets
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	UParticleSystem* BeamParticles;
 
 	// True when aiming
@@ -228,9 +231,11 @@ private:
 	bool bAiming;
 
 	// Default camera field of view value
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	float CameraDefaultFOV;
 
-	// Field of view value for when zoom 
+	// Field of view value for when zoom
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	float CameraZoomedFOV; 
 
 	// Current field pf view this frame
@@ -350,6 +355,25 @@ private:
 	// Crouch Movement speed
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	float CrouchMovementSpeed;
+
+	// Current half height of the capsule
+	float CurrentCapsuleHalfHeight;
+
+	// Half height of the capsule when not crouching
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	float StandingCapsuleHalfHeight;
+
+	// Half height of the capsule when crouching
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	float CrouchingCapsuleHalfHeight;
+
+	// Ground Friction while not crouching
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	float BaseGroundFriction;
+
+	// Ground Friction while crouching
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	float CrouchingGroundFriction;
 	
 
 public:
