@@ -146,6 +146,9 @@ protected:
 	// Interps capsule half height when crouching/standing
 	void interpCapsuleHalfHeight(float DeltaTime);
 
+	void Aim();
+	void StopAiming();
+
 public:
 	// Called every frame 
 	virtual void Tick(float DeltaTime) override;
@@ -374,6 +377,9 @@ private:
 	// Ground Friction while crouching
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	float CrouchingGroundFriction;
+
+	// Used for Knowing when the aiming button is pressed
+	bool bAimingButtonPressed;
 	
 
 public:
