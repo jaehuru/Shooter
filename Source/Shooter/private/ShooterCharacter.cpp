@@ -225,7 +225,8 @@ bool AShooterCharacter::GetBeamEndLocation(const FVector& MuzzleSocketLocation, 
 	// Perform a second trace, this time from the gun barrel
 	FHitResult WeaponTraceHit;
 	const FVector WeaponTraceStart{ MuzzleSocketLocation };
-	const FVector WeaponTraceEnd{ OutBeamLocation };
+	const FVector StartToEnd{ OutBeamLocation - WeaponTraceStart };
+	const FVector WeaponTraceEnd{ MuzzleSocketLocation + StartToEnd * 1.25f };
 	GetWorld()->LineTraceSingleByChannel(
 		WeaponTraceHit,
 		WeaponTraceStart,
@@ -237,7 +238,6 @@ bool AShooterCharacter::GetBeamEndLocation(const FVector& MuzzleSocketLocation, 
 		return true;
 	}
 	return false;
-	
 }
 
 void AShooterCharacter::AimingButtonPressed()
@@ -303,43 +303,73 @@ void AShooterCharacter::CalculateCrosshairSpread(float DeltaTime)
 	Velocity.Z = 0.f;
 
 	// Calculate crosshair velocity factor
-	CrosshairVelocityFactor = FMath::GetMappedRangeValueClamped(WalkSpeedRange, VelocityMultiplierRange,Velocity.Size());
+	CrosshairVelocityFactor = FMath::GetMappedRangeValueClamped(
+		WalkSpeedRange,
+		VelocityMultiplierRange,
+		Velocity.Size());
 
 	// Calculate crosshair in air factor
 	if (GetCharacterMovement()->IsFalling()) // is in air?
 	{
 		// Spread the crosshairs slowly while in air
-		CrosshairInAirFactor = FMath::FInterpTo(CrosshairInAirFactor, 2.25f,  DeltaTime, 2.25f);
+		CrosshairInAirFactor = FMath::FInterpTo(
+			CrosshairInAirFactor,
+			2.25f,
+			DeltaTime,
+			2.25f);
 	}
 	else // Character is on the ground
 	{
 		//Shrink the crosshairs rapidly while on the ground
-		CrosshairInAirFactor = FMath::FInterpTo(CrosshairInAirFactor, 0.f,  DeltaTime, 30.f);
+		CrosshairInAirFactor = FMath::FInterpTo(
+			CrosshairInAirFactor,
+			0.f,
+			DeltaTime,
+			30.f);
 	}
 
 	// Calculate crosshair aim factor
 	if (bAiming) // Are we aiming?
 	{
 		// Shrink crosshairs a small amount very quickly
-		CrosshairAimFactor = FMath::FInterpTo(CrosshairAimFactor, 0.6f, DeltaTime, 30.f);
+		CrosshairAimFactor = FMath::FInterpTo(
+			CrosshairAimFactor,
+			0.6f, DeltaTime,
+			30.f);
 	}
 	else // Not aiming
 	{
 		// Spread crosshairs back to normal very quickly
-		CrosshairAimFactor = FMath::FInterpTo(CrosshairAimFactor, 0.f, DeltaTime, 30.f);
+		CrosshairAimFactor = FMath::FInterpTo(
+			CrosshairAimFactor,
+			0.f,
+			DeltaTime,
+			30.f);
 	}
 
 	// True 0.05 second after firing
 	if (bFiringBullet)
 	{
-		CrosshairShootingFactor = FMath::FInterpTo(CrosshairShootingFactor, 0.3f, DeltaTime, 60.f);
+		CrosshairShootingFactor = FMath::FInterpTo(
+			CrosshairShootingFactor,
+			0.3f, DeltaTime,
+			60.f);
 	}
 	else
 	{
-		CrosshairShootingFactor = FMath::FInterpTo(CrosshairShootingFactor, 0.f, DeltaTime, 60.f);
+		CrosshairShootingFactor = FMath::FInterpTo(
+			CrosshairShootingFactor,
+			0.f,
+			DeltaTime, 
+			60.f);
 	}
 	
-	CrosshairSpreadMultiplier = 0.5f + CrosshairVelocityFactor + CrosshairInAirFactor - CrosshairAimFactor + CrosshairShootingFactor;
+	CrosshairSpreadMultiplier =
+		0.5f +
+		CrosshairVelocityFactor +
+		CrosshairInAirFactor -
+		CrosshairAimFactor +
+		CrosshairShootingFactor;
 	
 }
 
@@ -466,9 +496,7 @@ void AShooterCharacter::TraceForItems()
 					// We are hitting a different AItem this frame from last frame or AIrem is null
 					TraceHitItemLastFrame->GetPickupWidget()->SetVisibility(false);
 				}
-				
 			}
-
 			// Store a reference to HitItem for nest frame
 			TraceHitItemLastFrame = TraceHitItem;
 		}
@@ -561,6 +589,7 @@ bool AShooterCharacter::WeaponHasAmmo()
 
 void AShooterCharacter::PlayFireSound()
 {
+	// Play fire sound
 	if (FireSound)
 	{
 		UGameplayStatics::PlaySound2D(this, FireSound);
@@ -570,7 +599,9 @@ void AShooterCharacter::PlayFireSound()
 
 void AShooterCharacter::SendBullet()
 {
-	const USkeletalMeshSocket* BarrelSocket = EquippedWeapon->GetItemMesh()->GetSocketByName("BarrelSocket");
+	// Send bullet
+	const USkeletalMeshSocket* BarrelSocket =
+		EquippedWeapon->GetItemMesh()->GetSocketByName("BarrelSocket");
 	if (BarrelSocket)
 	{
 		const FTransform SocketTransform = BarrelSocket->GetSocketTransform(EquippedWeapon->GetItemMesh());
@@ -614,6 +645,7 @@ void AShooterCharacter::PlayGunFiremontage()
 		AnimInstance->Montage_Play(HipFireMontage);
 		AnimInstance->Montage_JumpToSection(FName("StartFire"));
 	}
+	
 }
 
 void AShooterCharacter::ReloadButtonPressed()
