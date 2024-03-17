@@ -55,7 +55,7 @@ protected:
 	void SetActiveStars();
 
 	// Sets properties of the Item's components based on State
-	void SetItemProperties(EItemState State);
+	virtual void SetItemProperties(EItemState State);
 
 	// Called when ItemInterpTimer is finished
 	void FinishInterping();
@@ -151,21 +151,16 @@ private:
 	
 public:
 	FORCEINLINE UWidgetComponent* GetPickupWidget() const { return PickupWidget; }
-
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }
-
 	FORCEINLINE UBoxComponent* GetCollisionBox() const { return CollisionBox; }
-
 	FORCEINLINE EItemState GetItemState() const { return ItemState; }
+	FORCEINLINE USkeletalMeshComponent* GetItemMesh() const { return ItemMesh; }
+	FORCEINLINE USoundCue* GetPickupSound() const { return PickupSound; }
+	FORCEINLINE USoundCue* GetEquipSound() const { return EquipSound; }
+	FORCEINLINE int32 GetItemCount() const { return ItemCount; }
 
 	void SetItemState(EItemState State);
-
-	FORCEINLINE USkeletalMeshComponent* GetItemMesh() const { return ItemMesh; }
-
-	FORCEINLINE USoundCue* GetPickupSound() const { return PickupSound; }
-
-	FORCEINLINE USoundCue* GetEquipSound() const { return EquipSound; }
-
+	
 	// Called from the AShooterCharacter class
 	void StartItemCurve(AShooterCharacter* Char);
 	
