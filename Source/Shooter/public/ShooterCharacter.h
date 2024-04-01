@@ -382,21 +382,42 @@ private:
 
 	// Used for Knowing when the aiming button is pressed
 	bool bAimingButtonPressed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USceneComponent* WeaponInterpComp;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USceneComponent* InterpComp1;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USceneComponent* InterpComp2;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USceneComponent* InterpComp3;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USceneComponent* InterpComp4;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USceneComponent* InterpComp5;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USceneComponent* InterpComp6;
+	
 	
 
 public:
 	// Returns CameraBoom subobject
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-
 	FORCEINLINE bool GetAiming() const { return bAiming; }
+	FORCEINLINE int8 GetOverlappedItemCount() const { return OverlappedItemCount; }
+	FORCEINLINE ECombatState GetCombatstate() const { return CombatState; }
+	FORCEINLINE bool GetCrouching() const { return bCrouching; }
 
 	UFUNCTION(BlueprintCallable)
 	float GetCrosshairSpreadMultiplier() const;
-
-	FORCEINLINE int8 GetOverlappedItemCount() const { return OverlappedItemCount; }
-
+	
 	// Adds/subracts to/from OverlappedItemCount and updates bShouldTraceForItems
 	void IncrementOverlappedItemCount(int8 Amount);
 
@@ -404,7 +425,5 @@ public:
 
 	void GetPickupItem(AItem* Item);
 
-	FORCEINLINE ECombatState GetCombatstate() const { return CombatState; }
-	FORCEINLINE bool GetCrouching() const { return bCrouching; }
 	
 };
