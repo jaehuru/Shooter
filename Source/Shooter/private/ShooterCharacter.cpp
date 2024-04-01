@@ -72,7 +72,12 @@ StandingCapsuleHalfHeight(88.f),
 CrouchingCapsuleHalfHeight(44.f),
 BaseGroundFriction(2.f),
 CrouchingGroundFriction(100.f),
-bAimingButtonPressed(false)
+bAimingButtonPressed(false),
+// Pickup sound timer properties
+bShouldPlayPickupSound(true),
+bShouldPlayEquipSound(true),
+PickupSoundResetTime(0.2f),
+EquipSoundResetTime(0.2f)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -939,6 +944,34 @@ void AShooterCharacter::FinishReloading()
 	
 }
 
+void AShooterCharacter::ResetPickupSoundTimer()
+{
+	bShouldPlayPickupSound = true;
+}
+
+void AShooterCharacter::ResetEquipSoundTimer()
+{
+	bShouldPlayEquipSound = true;
+}
+
+void AShooterCharacter::StartPickupSoundTimer()
+{
+	bShouldPlayPickupSound = false;
+	GetWorldTimerManager().SetTimer(PickupSoundTimer,
+		this,
+		&AShooterCharacter::ResetPickupSoundTimer,
+		PickupSoundResetTime);
+}
+
+void AShooterCharacter::StartEquipSoundTimer()
+{
+	bShouldPlayEquipSound = false;
+	GetWorldTimerManager().SetTimer(EquipSoundTimer,
+		this,
+		&AShooterCharacter::ResetEquipSoundTimer,
+		EquipSoundResetTime);
+}
+
 float AShooterCharacter::GetCrosshairSpreadMultiplier() const
 {
 	return CrosshairSpreadMultiplier;
@@ -960,20 +993,18 @@ void AShooterCharacter::IncrementOverlappedItemCount(int8 Amount)
 	
 }
 
+/* No longer needed; AItem has GetInterpLocations
 FVector AShooterCharacter::GetCameraInterpLocation()
 {
 	const FVector CameraWorldLocation{FollowCamera->GetComponentLocation()};
 	const FVector CameraForward{FollowCamera->GetForwardVector()};
 	// Desired = CameraWorldLocation + Forward * A + Up * B
 	return CameraWorldLocation + CameraForward * CameraInterpDistance + FVector(0.f, 0.f, CameraInterpElevation);
-}
+}*/
 
 void AShooterCharacter::GetPickupItem(AItem* Item)
 {
-	if (Item->GetEquipSound())
-	{
-		UGameplayStatics::PlaySound2D(this, Item->GetEquipSound());
-	}
+	Item->PlayEquipSound();
 	
 	auto Weapon = Cast<AWeapon>(Item);
 	if (Weapon)
@@ -997,5 +1028,30 @@ FInterpLocation AShooterCharacter::GetInterpLocation(int32 Index)
 	return FInterpLocation();
 }
 
+int32 AShooterCharacter::GetInterpLocationIndex()
+{
+	int32 LowestIndex = 1;
+	int32 LowestCount = INT_MAX;
+	for (int32 i = 1; i < InterpLocations.Num(); i++)
+	{
+		if (InterpLocations[i].ItemCount < LowestCount)
+		{
+			LowestIndex = i;
+			LowestCount = InterpLocations[i].ItemCount;
+		}
+	}
+	
+	return LowestIndex;
+}
+
+void AShooterCharacter::IncrementInterpLocItemCount(int32 Index, int32 Amount)
+{
+	if (Amount < -1 || Amount > 1) return;
+
+	if (InterpLocations.Num() >= Index)
+	{
+		InterpLocations[Index].ItemCount += Amount;
+	}
+}
 
 

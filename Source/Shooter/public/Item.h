@@ -71,10 +71,18 @@ protected:
 
 	// Handles item interpolation when in the EquipInterping state
 	void ItemInterp(float DeltaTime);
+
+	// Get interp location based on the item
+	FVector GetInterpLocation();
+
+	void PlayPickupSound();
 	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	// Called in AShooterCharacter::GetPickupItem
+	void PlayEquipSound();
 
 private:
 	// Skeletal Mesh for the item
@@ -161,6 +169,10 @@ private:
 	// Enum for the type of item this Item is
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ITem Properties", meta = (AllowPrivateAccess = true))
 	EItemType ItemType;
+
+	// Index of the interp location this item is interping to
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ITem Properties", meta = (AllowPrivateAccess = true))
+	int32 InterpLocIndex;
 	
 public:
 	FORCEINLINE UWidgetComponent* GetPickupWidget() const { return PickupWidget; }
