@@ -204,6 +204,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ITem Properties", meta = (AllowPrivateAccess = true))
 	class UCurveVector* PulseCurve;
 
+	// Curve to drive the dynamic material parameters
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ITem Properties", meta = (AllowPrivateAccess = true))
+	class UCurveVector* InterpPulseCurve;
+
 	FTimerHandle PulseTimer;
 
 	// Time for the PulseTimer
@@ -241,3 +245,4 @@ public:
 	void DisableGlowMaterial();
 	
 };
+	
