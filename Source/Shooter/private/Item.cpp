@@ -187,9 +187,10 @@ void AItem::SetItemProperties(EItemState State)
 		break;
 	case EItemState::EIS_Falling:
 		// Set mesh properties
-		ItemMesh->SetSimulatePhysics(true);
 		ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		ItemMesh->SetSimulatePhysics(true);
 		ItemMesh->SetEnableGravity(true);
+		ItemMesh->SetVisibility(true);
 		ItemMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
 		ItemMesh->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
 		// Set AreaSphere properties
@@ -240,7 +241,6 @@ void AItem::FinishInterping()
 		// Subtract 1 from the count of the interp location struct
 		Character->IncrementInterpLocItemCount(InterpLocIndex, -1);
 		Character->GetPickupItem(this);
-		SetItemState(EItemState::EIS_PickedUp);
 	}
 	// Set scale back to normal
 	SetActorScale3D(FVector(1.f));
