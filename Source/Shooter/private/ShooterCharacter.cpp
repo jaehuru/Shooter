@@ -77,7 +77,9 @@ bAimingButtonPressed(false),
 bShouldPlayPickupSound(true),
 bShouldPlayEquipSound(true),
 PickupSoundResetTime(0.2f),
-EquipSoundResetTime(0.2f)
+EquipSoundResetTime(0.2f),
+// Icon animation property
+HighlightedSlot(-1)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -976,6 +978,19 @@ int32 AShooterCharacter::GetEmptyInventorySlot()
 	}
 
 	return -1; // Inventory is full!
+}
+
+void AShooterCharacter::HighlightInventorySlot()
+{
+	const int32 EmptySlot{ GetEmptyInventorySlot() };
+	HighlightIconDelegate.Broadcast(EmptySlot, true);
+	HighlightedSlot = EmptySlot;
+}
+
+void AShooterCharacter::UnHighlightInventotySlot()
+{
+	HighlightIconDelegate.Broadcast(HighlightedSlot, false);
+	HighlightedSlot = -1;
 }
 
 // Called every frame
