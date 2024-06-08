@@ -183,7 +183,6 @@ protected:
 	int32 GetEmptyInventorySlot();
 
 	void HighlightInventorySlot();
-	void UnHighlightInventotySlot();
 
 public:
 	// Called every frame 
@@ -515,4 +514,6 @@ public:
 
 	void StartPickupSoundTimer();
 	void StartEquipSoundTimer();
+
+	void UnHighlightInventotySlot();
 };
