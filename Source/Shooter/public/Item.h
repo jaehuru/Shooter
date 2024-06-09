@@ -144,7 +144,7 @@ private:
 	int32 ItemCount;
 
 	// Item rarity - determines number of stars in Pickup Widget
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item Properties", meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Rarity", meta = (AllowPrivateAccess = true))
 	EItemRarity ItemRarity;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item Properties", meta = (AllowPrivateAccess = true))
@@ -244,11 +244,7 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, Category = "ITem Properties", meta = (AllowPrivateAccess = true))
 	float FresnelReflectFraction;
-
-	// Background for this item in the inventory
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = true))
-	UTexture2D* IconBackground;
-
+	
 	// Icon for this item in the inventory
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = true))
 	UTexture2D* IconItem;
@@ -268,6 +264,26 @@ private:
 	// Item Rarity data table
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = DataTable, meta = (AllowPrivateAccess = true))
 	class UDataTable* ItemRarityDataTable;
+
+	// Color in the glow material
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Rarity, meta = (AllowPrivateAccess = true))
+	FLinearColor GlowColor;
+
+	// Light color in the pickiup widget
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Rarity, meta = (AllowPrivateAccess = true))
+	FLinearColor LightColor;
+
+	// Dark color in the pickiup widget
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Rarity, meta = (AllowPrivateAccess = true))
+	FLinearColor DarkColor;
+
+	// Number of stars in the pickup widget
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Rarity, meta = (AllowPrivateAccess = true))
+	int32 NumberofStars;
+
+	// Background icon for the inventory
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Rarity, meta = (AllowPrivateAccess = true))
+	UTexture2D* IconBackground;
 	
 public:
 	FORCEINLINE UWidgetComponent* GetPickupWidget() const { return PickupWidget; }
