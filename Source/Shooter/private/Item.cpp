@@ -9,7 +9,6 @@
 #include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Curves/CurveVector.h"
-#include "DSP/AudioDebuggingUtilities.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 
@@ -66,7 +65,7 @@ void AItem::BeginPlay()
 	// Hide Pickup Widget
 	if (PickupWidget)
 	{
-	PickupWidget->SetVisibility(false);
+		PickupWidget->SetVisibility(false);
 	}
 
 	// Sets ActiveStars array based on Item Rarity
@@ -426,7 +425,7 @@ void AItem::OnConstruction(const FTransform& Transform)
 			GlowColor = RarityRow->GlowColor;
 			LightColor = RarityRow->LightColor;
 			DarkColor = RarityRow->DarkColor;
-			NumberofStars = RarityRow->NumberOfStars;
+			NumberOfStars = RarityRow->NumberOfStars;
 			IconBackground = RarityRow->IconBackground;
 		}
 	}

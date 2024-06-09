@@ -279,7 +279,7 @@ private:
 
 	// Number of stars in the pickup widget
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Rarity, meta = (AllowPrivateAccess = true))
-	int32 NumberofStars;
+	int32 NumberOfStars;
 
 	// Background icon for the inventory
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Rarity, meta = (AllowPrivateAccess = true))
