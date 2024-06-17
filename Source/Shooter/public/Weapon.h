@@ -46,6 +46,15 @@ struct FWeaponDataTable : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 MaterialIndex;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName ClipBoneName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName ReloadMontageSection;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UAnimInstance> AnimBP;
 };
 
 /**
@@ -106,23 +115,26 @@ private:
 	int32 PreviousMaterialIndex;
 	
 public:
-	// Adds an impulse to the Weapon
-	void ThrowWeapon();
 
 	FORCEINLINE int32 GetAmmo() const { return Ammo; }
 	FORCEINLINE int32 GetMagazineCapacity() const { return MagazineCapacity; }
+	FORCEINLINE EWeaponType GetWeaponType() const { return WeaponType; }
+	FORCEINLINE EAmmoType GetAmmoType() const { return AmmoType; }
+	FORCEINLINE FName GetReloadMontageSection() const { return ReloadMontageSection; }
+	FORCEINLINE void SetReloadMontageSection(FName Name) { ReloadMontageSection = Name; }
+	FORCEINLINE FName GetClipBoneName() const { return ClipBoneName; }
+	FORCEINLINE void SetClipBoneName(FName Name) { ClipBoneName = Name; }
+	FORCEINLINE void SetMovingClip(bool Move) { bMovingClip = Move; }
+	
+	// Adds an impulse to the Weapon
+	void ThrowWeapon();
 
 	// Called from Character class when firing weapon
 	void DecrementAmmo();
 
-	FORCEINLINE EWeaponType GetWeaponType() const { return WeaponType; }
-	FORCEINLINE EAmmoType GetAmmoType() const { return AmmoType; }
-	FORCEINLINE FName GetReloadMontageSection() const { return ReloadMontageSection; }
-	FORCEINLINE FName GetClipBoneName() const { return ClipBoneName; }
 
 	void ReloadAmmo(int32 Amount);
 
-	FORCEINLINE void SetMovingClip(bool Move) { bMovingClip = Move; }
 
 	bool ClipIsFull();
 	
