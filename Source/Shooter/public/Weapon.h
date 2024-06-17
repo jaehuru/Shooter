@@ -70,6 +70,15 @@ struct FWeaponDataTable : public FTableRowBase
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UTexture2D* CrosshairsTop;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float AutoFireRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UParticleSystem* MuzzleFlash;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundCue* FireSound;
 };
 
 /**
@@ -144,9 +153,20 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = DataTable, meta = (AllowPrivateAccess = true))
 	UTexture2D* CrosshairsTop;
+
+	// The speed at which automatic fire happens
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = DataTable, meta = (AllowPrivateAccess = true))
+	float AutoFireRate;
+
+	// Paricle system spawned at the BarrelSoket
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = DataTable, meta = (AllowPrivateAccess = true))
+	class UParticleSystem* MuzzleFlash;
+
+	// Sound played when the weapon is fired
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = DataTable, meta = (AllowPrivateAccess = true))
+	USoundCue* FireSound;
 	
 public:
-
 	FORCEINLINE int32 GetAmmo() const { return Ammo; }
 	FORCEINLINE int32 GetMagazineCapacity() const { return MagazineCapacity; }
 	FORCEINLINE EWeaponType GetWeaponType() const { return WeaponType; }
