@@ -225,33 +225,21 @@ private:
 	float AimingLookUpRate;
 
 	// Scale factor for mouse look sensitivity. Turn rate when not aiming.
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin =
-		"0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin = "0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
 	float MouseHipTurnRate;
 
 	// Scale factor for mouse look sensitivity. Turn rate when aiming.
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin =
-		"0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin = "0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
 	float MouseHipLookUpRate;
 
 	// Scale factor for mouse look sensitivity. Look up rate when not aiming.
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin =
-		"0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin = "0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
 	float MouseAimingTurnRate;
 
 	// Scale factor for mouse look sensitivity. Look up rate when aiming.
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin =
-		"0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"), meta = (ClampMin = "0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
 	float MouseAimingLookUpRate;
-
-	// Randomized gunshot sound cue
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
-	class USoundCue* FireSound;
-
-	// Flash spawned at BarrelSocket
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
-	class UParticleSystem* MuzzleFlash;
-
+	
 	// Montage for firing the weapon
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	class UAnimMontage* HipFireMontage;
@@ -314,10 +302,7 @@ private:
 
 	// True when we can fire. False when waiting for the timer
 	bool bShouldFire;
-
-	// Rate of automatic gun fire
-	float AutomaticFireRate;
-
+	
 	// Sets a timer between gunshots
 	FTimerHandle AutoFireTimer;
 	
