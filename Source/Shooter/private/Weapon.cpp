@@ -12,7 +12,10 @@ WeaponType(EWeaponType::EWT_SubmachineGun),
 AmmoType(EAmmoType::EAT_9mm),
 ReloadMontageSection(FName(TEXT("Reload SMG"))),
 ClipBoneName(TEXT("smg_clip")),
-SlideDisplacement(0.f)
+SlideDisplacement(0.f),
+SlideDisplacementTime(0.1f),
+bMovingSlide(false),
+MaxSlideDisplacement(4.f)
 {
 
 }
@@ -26,6 +29,17 @@ void AWeapon::Tick(float DeltaTime)
 		const FRotator MeshRotation{0.f, GetItemMesh()->GetComponentRotation().Yaw, 0.f};
 		GetItemMesh()->SetWorldRotation(MeshRotation, false, nullptr, ETeleportType::TeleportPhysics);
 	}
+}
+
+void AWeapon::StartSlideTimer()
+{
+	bMovingSlide = true;
+	GetWorldTimerManager().SetTimer(
+		SlideTimer,
+		this,
+		&AWeapon::FinishMovingSlide,
+		SlideDisplacementTime
+		);
 }
 
 void AWeapon::ThrowWeapon()
@@ -154,4 +168,9 @@ void AWeapon::BeginPlay()
 	{
 		GetItemMesh()->HideBoneByName(BoneToHide, PBO_None);
 	}
+}
+
+void AWeapon::FinishMovingSlide()
+{
+	bMovingSlide = false;
 }
