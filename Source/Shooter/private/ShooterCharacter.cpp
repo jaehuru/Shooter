@@ -237,9 +237,7 @@ void AShooterCharacter::FireWeapon()
 		EquippedWeapon->DecrementAmmo(); // Subtract 1 from the Weapon's Ammo
 
 		StartFireTimer();
-		// Start bullet fire timer for crosshairs
-		StartCrosshairBulletFire();
-
+		
 		if (EquippedWeapon->GetWeaponType() == EWeaponType::EWT_Pistol)
 		{
 			// Start moving slide timer
@@ -442,10 +440,10 @@ void AShooterCharacter::StartFireTimer()
 void AShooterCharacter::AutoFireReset()
 {
 	CombatState = ECombatState::ECS_Uncoccupied;
-
+	if (EquippedWeapon == nullptr) return;
 	if (WeaponHasAmmo())
 	{
-		if (bFireButtonPressed)
+		if (bFireButtonPressed && EquippedWeapon->GetAutomatic())
 		{
 			FireWeapon();
 		}
@@ -741,7 +739,9 @@ void AShooterCharacter::PlayGunFiremontage()
 		AnimInstance->Montage_Play(HipFireMontage);
 		AnimInstance->Montage_JumpToSection(FName("StartFire"));
 	}
-	
+
+	// Start bullet fire timer for crosshairs
+	StartCrosshairBulletFire();
 }
 
 void AShooterCharacter::ReloadButtonPressed()
