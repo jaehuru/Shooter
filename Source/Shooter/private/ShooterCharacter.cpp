@@ -38,7 +38,7 @@ MouseAimingLookUpRate(0.6f),
 bAiming(false),
 // Camera field of view values
 CameraDefaultFOV(0.f), // set in BeginPlay
-CameraZoomedFOV(25.f),
+CameraZoomedFOV(50.f),
 CameraCurrentFOV(0.f),
 ZoomInterpSpeed(20.f),
 // Crosshair spread factors
