@@ -283,7 +283,7 @@ bool AShooterCharacter::GetBeamEndLocation(const FVector& MuzzleSocketLocation, 
 void AShooterCharacter::AimingButtonPressed()
 {
 	bAimingButtonPressed = true;
-	if (CombatState != ECombatState::ECS_Reloading)
+	if (CombatState != ECombatState::ECS_Reloading && CombatState != ECombatState::ECS_Equipping)
 	{
 		Aim();
 	}
@@ -970,6 +970,11 @@ void AShooterCharacter::ExchangeInventoryItems(int32 CurrentItemIndex, int32 New
 		(CombatState == ECombatState::ECS_Uncoccupied || CombatState == ECombatState::ECS_Equipping);
 	if (bCanExchangeItems)
 	{
+		if (bAiming)
+		{
+			StopAiming();
+		}
+		
 		auto OldEquippedWeapon = EquippedWeapon;
 		auto NewWeapon = Cast<AWeapon>(Inventory[NewItemIndex]);
 		EquipWeapon(NewWeapon);
@@ -1117,6 +1122,10 @@ void AShooterCharacter::FinishReloading()
 void AShooterCharacter::FinishEquipping()
 {
 	CombatState = ECombatState::ECS_Uncoccupied;
+	if (bAimingButtonPressed)
+	{
+		Aim();
+	}
 }
 
 void AShooterCharacter::ResetPickupSoundTimer()
