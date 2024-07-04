@@ -14,11 +14,13 @@
 #include "DrawDebugHelpers.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Item.h"
+#include "Shooter.h"
 #include "Weapon.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
+#include "PhysicalMaterials/PhysicalMaterial.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter() :
@@ -1017,7 +1019,7 @@ void AShooterCharacter::HighlightInventorySlot()
 	HighlightedSlot = EmptySlot;
 }
 
-void AShooterCharacter::Footstep()
+EPhysicalSurface AShooterCharacter::GetSurfaceType()
 {
 	FHitResult HitResult;
 	const FVector Start{ GetActorLocation() + FVector(0.f, 0.f, 30.f)};
@@ -1031,11 +1033,7 @@ void AShooterCharacter::Footstep()
 		End,
 		ECC_Visibility,
 		QueryParams);
-	if (HitResult.GetActor())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *HitResult.GetActor()->GetActorLabel());
-	}
-	
+	return UPhysicalMaterial::DetermineSurfaceType(HitResult.PhysMaterial.Get());
 }
 
 void AShooterCharacter::UnHighlightInventotySlot()
