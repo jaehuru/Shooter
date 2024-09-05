@@ -721,20 +721,19 @@ void AShooterCharacter::SendBullet()
 				{
 					BulletHitInterface->BulletHit_Implementation(BeamHitResult);
 				}
-			}
-			else
-			{
-				// Spawn default particles
-				if (ImpactParticles)
+				else
 				{
-					UGameplayStatics::SpawnEmitterAtLocation(
-						GetWorld(),
-						ImpactParticles,
-						BeamHitResult.Location); 
+					// Spawn default particles
+					if (ImpactParticles)
+					{
+						UGameplayStatics::SpawnEmitterAtLocation(
+							GetWorld(),
+							ImpactParticles,
+							BeamHitResult.Location); 
+					}
 				}
 			}
 			
-
 			UParticleSystemComponent* Beam = UGameplayStatics::SpawnEmitterAtLocation(
 				GetWorld(),
 				BeamParticles,
@@ -745,7 +744,6 @@ void AShooterCharacter::SendBullet()
 			}
 		}
 	}
-	
 }
 
 void AShooterCharacter::PlayGunFiremontage()
