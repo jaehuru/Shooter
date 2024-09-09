@@ -13,6 +13,7 @@
 #include "Sound/SoundCue.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "DrawDebugHelpers.h"
+#include "Enemy.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Item.h"
 #include "Shooter.h"
@@ -731,6 +732,17 @@ void AShooterCharacter::SendBullet()
 							ImpactParticles,
 							BeamHitResult.Location); 
 					}
+				}
+
+				AEnemy* HitEnemy = Cast<AEnemy>(BeamHitResult.GetActor());
+				if (HitEnemy)
+				{
+					UGameplayStatics::ApplyDamage(
+						BeamHitResult.GetActor(),
+						EquippedWeapon->GetDamage(),
+						GetController(),
+						this, 
+						UDamageType::StaticClass());
 				}
 			}
 			
