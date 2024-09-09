@@ -31,6 +31,8 @@ protected:
 
 	void PlayHitMontage(FName Section, float PlayRate = 1.0f);
 
+	void ResetHitReactTimer();
+
 private:
 	/** Particles to spawn when hit by bullets */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
@@ -61,6 +63,16 @@ private:
 	/**  Montage containing Hit and Death animations */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
 	UAnimMontage* HitMontage;
+
+	FTimerHandle HitReactTimer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	float HitReactTimeMin;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	float HitReactTimeMax;
+
+	bool bCanHitReact;
 
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }
