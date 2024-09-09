@@ -29,6 +29,8 @@ protected:
 
 	void Die();
 
+	void PlayHitMontage(FName Section, float PlayRate = 1.0f);
+
 private:
 	/** Particles to spawn when hit by bullets */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
@@ -56,7 +58,13 @@ private:
 	
 	FTimerHandle HealthBarTimer;
 
+	/**  Montage containing Hit and Death animations */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	UAnimMontage* HitMontage;
+
 public:	
+	FORCEINLINE FString GetHeadBone() const { return HeadBone; }
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -67,5 +75,4 @@ public:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-	FORCEINLINE FString GetHeadBone() const { return HeadBone; }
 };
