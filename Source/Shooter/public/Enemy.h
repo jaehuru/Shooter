@@ -33,46 +33,60 @@ protected:
 
 	void ResetHitReactTimer();
 
+	UFUNCTION(BlueprintCallable)
+	void StoreHitNumber(UUserWidget* HitNumber, FVector Location);
+
+	UFUNCTION()
+	void DestroyHitNumber(UUserWidget* HitNumber);
+
 private:
 	/** Particles to spawn when hit by bullets */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	class UParticleSystem* ImpactParticles;
 
 	/** Sound to play when hit by bullets */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	class USoundCue* ImpactSound;
 
 	/** Current health of the enemy */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	float Health;
 
 	/** Maxumum health of the enemy */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	float MaxHealth;
 
 	/** Name of the head bone */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	FString HeadBone;
 
 	/** Time to display health bar once shot */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	float HealthBarDisplayTime;
 	
 	FTimerHandle HealthBarTimer;
 
 	/**  Montage containing Hit and Death animations */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* HitMontage;
 
 	FTimerHandle HitReactTimer;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	float HitReactTimeMin;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	float HitReactTimeMax;
 
 	bool bCanHitReact;
+
+	/** Map to store HitNumber widgets and their hit locations */
+	UPROPERTY(VisibleAnywhere, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	TMap<UUserWidget*, FVector> HitNumbers;
+
+	/** Time before a HitNumber is removed from the screen */
+	UPROPERTY(EditAnywhere, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	float HitNumberDestroyTime;
 
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }
