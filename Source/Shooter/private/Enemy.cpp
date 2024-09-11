@@ -16,7 +16,7 @@ HealthBarDisplayTime(4.f),
 HitReactTimeMin(0.5f),
 HitReactTimeMax(0.75f),
 bCanHitReact(true),
-HitNumberDestroyTime(0.5f)
+HitNumberDestroyTime(0.2f)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
