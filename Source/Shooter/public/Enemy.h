@@ -17,7 +17,6 @@ public:
 	AEnemy();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintNativeEvent)
@@ -93,6 +92,10 @@ private:
 	/** Behavior tree for the AI Character */
 	UPROPERTY(EditAnywhere, Category = "Behavior Tree", meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTree* BehaviorTree;
+
+	/** Point for the enemy to move to */
+	UPROPERTY(EditAnywhere, Category = "Behavior Tree", meta = (AllowPrivateAccess = "true", MakeEditWidget = "true"))
+	FVector PatroPoint;
 
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }
