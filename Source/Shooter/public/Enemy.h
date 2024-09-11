@@ -97,6 +97,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Behavior Tree", meta = (AllowPrivateAccess = "true", MakeEditWidget = "true"))
 	FVector PatrolPoint;
 
+	class AEnemyController* EnemyController;
+
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }
 	FORCEINLINE UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }

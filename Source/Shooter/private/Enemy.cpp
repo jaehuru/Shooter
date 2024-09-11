@@ -9,6 +9,8 @@
 #include "Sound/SoundCue.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "DrawDebugHelpers.h"
+#include "EnemyController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 // Sets default values
 AEnemy::AEnemy() :
@@ -32,7 +34,10 @@ void AEnemy::BeginPlay()
 
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 
-	FVector WorldPatrolPoint = UKismetMathLibrary::TransformLocation(GetActorTransform(), PatrolPoint);
+	// Get the AI Controller
+	EnemyController = Cast<AEnemyController>(GetController());
+	
+	const FVector WorldPatrolPoint = UKismetMathLibrary::TransformLocation(GetActorTransform(), PatrolPoint);
 	DrawDebugSphere(
 		GetWorld(),
 		WorldPatrolPoint,
@@ -41,6 +46,14 @@ void AEnemy::BeginPlay()
 		FColor::Red,
 		true
 	);
+
+	if (EnemyController)
+	{
+		EnemyController->GetBlackboardComponent()->SetValueAsVector(TEXT("PatrolPoint"), WorldPatrolPoint);
+
+		EnemyController->RunBehaviorTree(BehaviorTree);
+	}
+	
 }
 
 void AEnemy::ShowHealthBar_Implementation()
