@@ -95,7 +95,7 @@ private:
 
 	/** Point for the enemy to move to */
 	UPROPERTY(EditAnywhere, Category = "Behavior Tree", meta = (AllowPrivateAccess = "true", MakeEditWidget = "true"))
-	FVector PatroPoint;
+	FVector PatrolPoint;
 
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }

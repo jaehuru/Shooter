@@ -32,10 +32,10 @@ void AEnemy::BeginPlay()
 
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 
-	FVector WorldPatroPoint = UKismetMathLibrary::TransformLocation(GetActorTransform(), PatroPoint);
+	FVector WorldPatrolPoint = UKismetMathLibrary::TransformLocation(GetActorTransform(), PatrolPoint);
 	DrawDebugSphere(
 		GetWorld(),
-		WorldPatroPoint,
+		WorldPatrolPoint,
 		25.f,
 		12,
 		FColor::Red,
