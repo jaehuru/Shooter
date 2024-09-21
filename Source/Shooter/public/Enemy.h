@@ -72,6 +72,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void PlayAttackMontage(FName Section, float PlayRate);
 
+	UFUNCTION(BlueprintPure)
+	FName GetAttackSectionName();
+
 private:
 	/** Particles to spawn when hit by bullets */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
