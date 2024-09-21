@@ -12,6 +12,7 @@
 #include "EnemyController.h"
 #include "ShooterCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 
 // Sets default values
@@ -52,6 +53,9 @@ void AEnemy::BeginPlay()
 	CombatRangeSphere->OnComponentEndOverlap.AddDynamic(this, &AEnemy::CombatRangeEndOverlap);
 
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+	// Ignore the camera for Mesh and Capsule
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 
 	// Get the AI Controller
 	EnemyController = Cast<AEnemyController>(GetController());
