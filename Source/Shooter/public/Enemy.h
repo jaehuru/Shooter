@@ -75,6 +75,35 @@ protected:
 	UFUNCTION(BlueprintPure)
 	FName GetAttackSectionName();
 
+	UFUNCTION()
+	void OnLeftWeaponOverlap(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnRightWeaponOverlap(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult);
+
+	// Activate/deactivate collision for weapon boxes
+	UFUNCTION(BlueprintCallable)
+	void ActivateLeftWeapon();
+	UFUNCTION(BlueprintCallable)
+	void DeactivateLeftWeapon();
+	UFUNCTION(BlueprintCallable)
+	void ActivateRightWeapon();
+	UFUNCTION(BlueprintCallable)
+	void DeactivateRightWeapon();
+	
+
 private:
 	/** Particles to spawn when hit by bullets */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
@@ -167,6 +196,14 @@ private:
 	FName AttackRFast;
 	FName AttackL;
 	FName AttackR;
+	
+	/** Collision volume for the left weapon */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	class UBoxComponent* LeftWeaponCollision;
+
+	/** Collision volume for the right weapon */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	class UBoxComponent* RightWeaponCollision;
 
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }
