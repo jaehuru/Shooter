@@ -102,7 +102,8 @@ protected:
 	void ActivateRightWeapon();
 	UFUNCTION(BlueprintCallable)
 	void DeactivateRightWeapon();
-	
+
+	void DoDamage(AActor* Victim);
 
 private:
 	/** Particles to spawn when hit by bullets */
@@ -204,6 +205,10 @@ private:
 	/** Collision volume for the right weapon */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* RightWeaponCollision;
+
+	/** Base damage for Enemy */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	float BaseDamage;
 
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }
