@@ -494,7 +494,7 @@ public:
 	// Returns CameraBoom subobject
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	FORCEINLINE bool GetAiming() const { return bAiming; } .
+	FORCEINLINE bool GetAiming() const { return bAiming; }
 	FORCEINLINE int8 GetOverlappedItemCount() const { return OverlappedItemCount; }
 	FORCEINLINE ECombatState GetCombatstate() const { return CombatState; }
 	FORCEINLINE bool GetCrouching() const { return bCrouching; }
