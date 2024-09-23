@@ -498,6 +498,14 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	UParticleSystem* BloodParticles;
 
+	/** Hit react anim montage; for when Character is stunned */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* HitReactMontage;
+
+	/** Chance of being stunned when hit by an ememy */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	float StunChance;
+
 public:
 	// Returns CameraBoom subobject
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -511,6 +519,7 @@ public:
 	FORCEINLINE AWeapon* GetEquippedWeapon() const { return EquippedWeapon; }
 	FORCEINLINE USoundCue* GetMeleeImpactSound() const { return MeleeImpactSound; }
 	FORCEINLINE UParticleSystem* GetBloodParicles() const { return BloodParticles; }
+	FORCEINLINE float GetStunChance() const { return StunChance; }
 
 	UFUNCTION(BlueprintCallable)
 	float GetCrosshairSpreadMultiplier() const;
@@ -534,4 +543,6 @@ public:
 	void StartEquipSoundTimer();
 
 	void UnHighlightInventotySlot();
+
+	void Stun();
 };

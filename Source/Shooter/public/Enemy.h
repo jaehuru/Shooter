@@ -106,6 +106,11 @@ protected:
 	void DoDamage(class AShooterCharacter* Victim);
 	void SpawnBlood(AShooterCharacter* Victim, FName SocketName);
 
+	// Attempt to stun character
+	void StunCharacter(AShooterCharacter* Victim);
+
+	void ResetCanAttck();
+
 private:
 	/** Particles to spawn when hit by bullets */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
@@ -216,6 +221,16 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	FName RightWeaponSocket;
+
+	/** True when Enemy can attack */
+	UPROPERTY(VisibleAnywhere, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	bool bCanAttack;
+
+	FTimerHandle AttackWaitTimer;
+
+	/** Minimum wait time between attacks */
+	UPROPERTY(EditAnywhere, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	float AttackWaitTime;
 
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }

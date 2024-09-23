@@ -85,7 +85,8 @@ EquipSoundResetTime(0.2f),
 HighlightedSlot(-1),
 // Character health
 Health(100.f),
-MaxHealth(100.f)
+MaxHealth(100.f),
+StunChance(0.25f)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -1113,6 +1114,17 @@ void AShooterCharacter::UnHighlightInventotySlot()
 {
 	HighlightIconDelegate.Broadcast(HighlightedSlot, false);
 	HighlightedSlot = -1;
+}
+
+void AShooterCharacter::Stun()
+{
+	CombatState = ECombatState::ECS_Stunned;
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && HitReactMontage)
+	{
+		AnimInstance->Montage_Play(HitReactMontage);
+	}
 }
 
 // Called every frame
