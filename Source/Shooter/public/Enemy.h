@@ -114,6 +114,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void FinishDeath();
 
+	UFUNCTION()
+	void DestroyEnemy();
+
 private:
 	/** Particles to spawn when hit by bullets */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
@@ -240,6 +243,12 @@ private:
 	UAnimMontage* DeathMontage;
 
 	bool bDying;
+
+	FTimerHandle DeathTimer;
+
+	/** Time after death until Destroy */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
+	float DeathTime;
 
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }

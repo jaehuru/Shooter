@@ -16,7 +16,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
-#include "Serialization/AsyncPackageLoader.h"
+
 
 // Sets default values
 AEnemy::AEnemy() :
@@ -38,7 +38,8 @@ LeftWeaponSocket(TEXT("FX_Trail_L_01")),
 RightWeaponSocket(TEXT("FX_Trail_R_01")),
 bCanAttack(true),
 AttackWaitTime(1.f),
-bDying(false)
+bDying(false),
+DeathTime(4.f)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -413,6 +414,13 @@ void AEnemy::ResetCanAttck()
 
 void AEnemy::FinishDeath()
 {
+	GetMesh()->bPauseAnims = true;
+
+	GetWorldTimerManager().SetTimer(DeathTimer, this, &AEnemy::DestroyEnemy, DeathTime);
+}
+
+void AEnemy::DestroyEnemy()
+{
 	Destroy();
 }
 
@@ -433,8 +441,6 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AEnemy::BulletHit_Implementation(FHitResult HitResult)
 {
-	IBulletHitInterface::BulletHit_Implementation(HitResult);
-
 	if (ImpactSound)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
@@ -443,6 +449,9 @@ void AEnemy::BulletHit_Implementation(FHitResult HitResult)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactParticles, HitResult.Location, FRotator(0.f), true);
 	}
+	
+	if (bDying) return;
+	
 	ShowHealthBar();
 
 	// Determine whether bullet hit stuns
