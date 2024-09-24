@@ -111,6 +111,9 @@ protected:
 
 	void ResetCanAttck();
 
+	UFUNCTION(BlueprintCallable)
+	void FinishDeath();
+
 private:
 	/** Particles to spawn when hit by bullets */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
@@ -235,6 +238,8 @@ private:
 	/** Death anim montage for the enemy */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* DeathMontage;
+
+	bool bDying;
 
 public:	
 	FORCEINLINE FString GetHeadBone() const { return HeadBone; }
