@@ -135,7 +135,19 @@ void AEnemy::ShowHealthBar_Implementation()
 
 void AEnemy::Die()
 {
-	HideHealthBar(); 
+	HideHealthBar();
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && DeathMontage)
+	{
+		AnimInstance->Montage_Play(DeathMontage);
+	}
+
+	if (EnemyController)
+	{
+		EnemyController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"),true);
+	}
+	EnemyController->StopMovement();
 }
 
 void AEnemy::PlayHitMontage(FName Section, float PlayRate)
@@ -436,6 +448,11 @@ void AEnemy::BulletHit_Implementation(FHitResult HitResult)
 
 float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	if (EnemyController)
+	{
+		EnemyController->GetBlackboardComponent()->SetValueAsObject(FName("Target"), DamageCauser);
+	}
+	
 	if (Health - DamageAmount <= 0.f)
 	{
 		Health = 0.f;
