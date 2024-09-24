@@ -14,10 +14,12 @@
 #include "Engine/SkeletalMeshSocket.h"
 #include "DrawDebugHelpers.h"
 #include "Enemy.h"
+#include "EnemyController.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Item.h"
 #include "Shooter.h"
 #include "Weapon.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
@@ -146,6 +148,12 @@ float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	{
 		Health = 0.f;
 		Die();
+
+		auto EnemyController = Cast<AEnemyController>(EventInstgator);
+		if (EnemyController)
+		{
+			EnemyController->GetBlackboardComponent()->SetValueAsBool(FName(TEXT("CharacterDead")), true);
+		}
 	}
 	else
 	{
