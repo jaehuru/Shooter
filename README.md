@@ -1,3 +1,3 @@
 # Shooter
 
-Single TPS Shooter game lecture
+UE5 C++ Single TPS Shooter game lecture
